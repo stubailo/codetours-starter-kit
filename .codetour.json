@@ -1,8 +1,8 @@
 {
-  "targetRepository": "partyparrot/codetours-starter-kit",
-  "description": "Start here when you're making a code tour!",
+  "targetRepository": "meteor/meteor",
+  "description": "Learn what happens when you publish a cursor from the database in Meteor",
   "steps": [
-    "my-first-step.md",
-    "markdown.md"
+    "publish.md",
+    "cursor.md"
   ]
 }
