@@ -30,3 +30,5 @@ Once we're done with the initial bookkeeping, we actually call the "publish hand
 Since most people probably use the cursor approach, at least at first, let's follow that path. As you can see, we first get the initial data set, and then call `ready()` on the subscription. This `ready` call is what tells the client that the initial data has been sent.
 
 You can see that the data returned is from `res._publishCursor()`, which is implemented in the `mongo` package. So let's go there next.
+
+> This block in the code tour exists solely so that we can delete it later for a demo.
