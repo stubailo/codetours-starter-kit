@@ -3,6 +3,8 @@ title: Meteor.publish and the server
 code: https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L1468-L1476
 ---
 
+> This quoted block exists solely so that we can remove it as part of our hackathon demo.
+
 In this code tour, we'll take a quick jaunt around the Meteor codebase to see what happens on the network when we publish data from a MongoDB collection. We won't go into livequery and how changes are tracked in the database itself - that's a big topic for a future tour!
 
 As you can see, we've started at `Meteor.publish` - that's the function you call to publish a collection of data.
