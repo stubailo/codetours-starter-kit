@@ -3,6 +3,9 @@
   "description": "Learn what happens when you publish a cursor from the database in Meteor",
   "steps": [
     "publish.md",
-    "cursor.md"
+    "cursor.md",
+    "added.md",
+    "client.md",
+    "minimongo.md"
   ]
 }
