@@ -1,29 +1,23 @@
 ---
-title: A code tour configuration file
-code: https://github.com/partyparrot/codetours-starter-kit/blob/ded59179edb6bd892ccffcb0c5a8a4f3868826d5/.codetour.json
+title: Meteor.publish and the server
+code: https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L1468-L1476
 ---
 
-### Welcome to CodeTours!
+In this code tour, we'll take a quick jaunt around the Meteor codebase to see what happens on the network when we publish data from a MongoDB collection. We won't go into livequery and how changes are tracked in the database itself - that's a big topic for a future tour!
 
-You might have read some code tours already, but this one is special - it's designed to teach you how to make a tour yourself. You can make a code tour of any open source project, even one you don't have commit access to.
+As you can see, we've started at `Meteor.publish` - that's the function you call to publish a collection of data.
 
-The content for a code tour is pulled from your repository on GitHub. To be able to be imported as a code tour, your repository needs to contain:
+<a href="https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L1512-L1513"><h4>Saving the handler</h4></a>
 
-1. A `.codetour.json` configuration file in the root of the repository
-2. One or more markdown files, referenced by the configuration file
+When you actually call `Meteor.publish`, not much happens at all. Meteor just saves your "publish handler" for later use; it's only triggered when someone subscribes.
 
-On the left, you can see an example of a very simple `.codetour.json` file. You can see that it needs to include at least three properties.
+<a href="https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L561-L578"><h4>Receiving the 'sub' message</h4></a>
 
-<a href="https://github.com/partyparrot/codetours-starter-kit/blob/ded59179edb6bd892ccffcb0c5a8a4f3868826d5/.codetour.json#L2" id="targetRepository"><h4>targetRepository</h4></a>
+The interesting part begins here, on receipt of the DDP `sub` message. You can read more about the DDP protocol in detail [in the spec itself](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md), and find a thorough explanation of every message.
 
-This property represents the repository that you are writing a tour about. For example, your code tour might live at `github.com/mynamehere/best-react-tour`, and the `targetRepository` would be `facebook/react`. This will help people find your tour when browsing this website.
+This event listener does some basic checking and rate limiting logic, but its real job is to call the next function once we know the publication is valid and should be allowed to go through.
 
-<a href="https://github.com/partyparrot/codetours-starter-kit/blob/ded59179edb6bd892ccffcb0c5a8a4f3868826d5/.codetour.json#L3" id="description"><h4>description</h4></a>
+<a href="https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L835-L846"><h4>Calling _startSubscription</h4></a>
 
-This property is a description that should tell people what to expect when they get into your tour. It's your chance to hook people in when they are browsing the catalog.
+It ends up calling `_startSubscription`, which initializes a `Subscription` object with the handler, and attaches it to the server.
 
-<a href="https://github.com/partyparrot/codetours-starter-kit/blob/ded59179edb6bd892ccffcb0c5a8a4f3868826d5/.codetour.json#L4-L6" id="steps"><h4>steps</h4></a>
-
-This property represents the actual content of your tour - it's an array of steps, each of which is the path to a Markdown-formatted file inside the same repository.
-
-That's all for the configuration file - go to the next step to learn how to write the content of the steps themselves.
