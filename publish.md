@@ -24,9 +24,3 @@ It ends up calling `_startSubscription`, which initializes a `Subscription` obje
 <a href="https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L1044"><h4>_publishHandlerResult</h4></a>
 
 Once we're done with the initial bookkeeping, we actually call the "publish handler" - the function we actually passed into `Meteor.publish`. It turns out, publications can actually do two related but semantically different things - first, they can simply return a MongoDB cursor, and the results of the cursor are published to the client, and second, they can manually call `this.added` etc. callbacks to push data that didn't originate in Mongo.
-
-<a href="https://github.com/meteor/meteor/blob/a7c04581a089ef126fb86940a98b983f7b46b714/packages/ddp-server/livedata_server.js#L1066-L1076"><h4>Special case for cursors</h4></a>
-
-Since most people probably use the cursor approach, at least at first, let's follow that path. As you can see, we first get the initial data set, and then call `ready()` on the subscription. This `ready` call is what tells the client that the initial data has been sent.
-
-You can see that the data returned is from `res._publishCursor()`, which is implemented in the `mongo` package. So let's go there next.
